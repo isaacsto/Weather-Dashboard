@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Dashbord</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <!-- creates an input form for user to search cities-->
+    <div>
+      <label for="cityInput">Enter a city name:</label>
+      <input typ="text" id="cityInput">
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!--div to put data API pulls-->
+    <div id="weatherInfo"></div>
+    
+    <!--div to save search history-->
+    <div id="searchHistory"></div>
+
+    <script src="script.js"></script>
+    </body>
