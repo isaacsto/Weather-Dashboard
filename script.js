@@ -18,7 +18,7 @@ function callFetch(city) {
    
     //gets date for display
     var currentDate = new Date();
-    var month = currentDate.getMonth() + 1;
+    var month = currentDate.getMonth();
     var day = currentDate.getDate();
     var year = currentDate.getFullYear();
     var fullDate = month + '/' + day + '/' + year;
@@ -50,9 +50,9 @@ function callFetch(city) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            var searchHistoryDiv = document.querySelector("#searchHistory");
+            var fiveDayForecastDiv = document.querySelector("#fiveDayForecastDive");
             for (i = 0; i < data.list.length; i+8) {
-            searchHistoryDiv.innerHTML = ``
+            fiveDayForecastDiv.innerHTML = `${fullDate} <br> ${data.list.main.temp}`
             }
         })
         .catch(error => {
@@ -62,11 +62,3 @@ function callFetch(city) {
 
 }
 
-//function getApi() {
- //   var requestUrl = 'api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}';
-//}
-
-/* API calls 
-https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-https://api.openweathermap.org/data/2.5/weather?q={city name},{country code}&appid={API key}
-https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key} */
