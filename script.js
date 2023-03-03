@@ -50,9 +50,10 @@ function callFetch(city) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            var fiveDayForecastDiv = document.querySelector("#fiveDayForecastDive");
-            for (i = 0; i < data.list.length; i+8) {
+            var fiveDayForecastDiv = document.querySelector("#fiveDayForecast");
+            for (i = 0; i < data.length; i*8) {
             fiveDayForecastDiv.innerHTML = `${fullDate} <br> ${data.list.main.temp}`
+            console.log(data.list[i])
             }
         })
         .catch(error => {
