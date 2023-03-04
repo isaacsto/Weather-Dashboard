@@ -55,11 +55,15 @@ function callFetch(city) {
     fetch(fiveDayForecast)
         .then(response => response.json())
         .then(data => {
+            //makes variables arrays so data can more easily be extracted for the display
+            var temp = []
+            var fiveDayHumidity = []
+            var fiveDayWind = []
             console.log(data)
             // for loop iterates through data array so only 5 temperatures show up  
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].main.temp)
-                var temp = data.list[i].main.temp;
+                temp.push(data.list[i].main.temp);
                 
                /*  var tempEl = document.createElement("p");
                 tempEl.textContent = temp;
@@ -69,7 +73,7 @@ function callFetch(city) {
             //for loop to iterate through data array and display humidity
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].main.humidity)
-                var fiveDayHumidity = data.list[i].main.humidity;
+                fiveDayHumidity.push(data.list[i].main.humidity);
                
                 /* var fiveDayHumidityEl = document.createElement("p");
                 fiveDayHumidityEl.textContent = fiveDayHumidity;
@@ -79,7 +83,7 @@ function callFetch(city) {
             //for loop to iterate through data array and displays wind speed
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].wind.speed)
-                var fiveDayWind = data.list[i].wind.speed;
+                fiveDayWind.push(data.list[i].wind.speed)
                 
                /*  var fiveDayWindEl = document.createElement("p");
                 fiveDayWindEl.textContent = fiveDayWind;
@@ -87,10 +91,11 @@ function callFetch(city) {
                 console.log(fiveDayForecastDiv) */
             }
             
-            var tempHumidWind = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
-            var fiveDayDisplayEl = document.createElement("figure")
+        
+           /*  var tempHumidWind = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
+            var fiveDayDisplayEl = document.createElement("p")
             fiveDayDisplayEl.textcontent = tempHumidWind
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl)
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl) */
 
         })
         .catch(error => {
