@@ -60,30 +60,38 @@ function callFetch(city) {
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].main.temp)
                 var temp = data.list[i].main.temp;
-                var tempEl = document.createElement("p");
+                
+               /*  var tempEl = document.createElement("p");
                 tempEl.textContent = temp;
                 fiveDayForecastDiv.appendChild(tempEl); 
-                console.log(fiveDayForecastDiv)
+                console.log(fiveDayForecastDiv) */
             }
             //for loop to iterate through data array and display humidity
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].main.humidity)
                 var fiveDayHumidity = data.list[i].main.humidity;
-                var fiveDayHumidityEl = document.createElement("p");
+               
+                /* var fiveDayHumidityEl = document.createElement("p");
                 fiveDayHumidityEl.textContent = fiveDayHumidity;
                 fiveDayForecastDiv.appendChild(fiveDayHumidityEl); 
-                console.log(fiveDayForecastDiv)
-            
+                console.log(fiveDayForecastDiv) */  
             }
+            //for loop to iterate through data array and displays wind speed
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].wind.speed)
                 var fiveDayWind = data.list[i].wind.speed;
-                var fiveDayWindEl = document.createElement("p");
+                
+               /*  var fiveDayWindEl = document.createElement("p");
                 fiveDayWindEl.textContent = fiveDayWind;
                 fiveDayForecastDiv.appendChild(fiveDayWindEl); 
-                console.log(fiveDayForecastDiv)
-            
+                console.log(fiveDayForecastDiv) */
             }
+            
+            var tempHumidWind = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
+            var fiveDayDisplayEl = document.createElement("figure")
+            fiveDayDisplayEl.textcontent = tempHumidWind
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl)
+
         })
         .catch(error => {
             console.log(error);
