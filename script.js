@@ -1,7 +1,13 @@
 //coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys
 var APIKey = "e87ec7f203ff2e1f695f40b6fe50b1e1";
 var searchHistory = [];
-var city = [];
+var city = []
+
+
+// defines fiveDayForecastDiv globally for fetch to circumvent dev tools error that showed up
+var fiveDayForecastDiv = document.querySelector("#fiveDayForecast");
+console.log(fiveDayForecastDiv);
+
 
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
 document.querySelector("#searchBtn").addEventListener("click", function () {
@@ -50,14 +56,37 @@ function callFetch(city) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            var fiveDayForecastDiv = document.querySelector("#fiveDayForecast");
-            for (i = 0; i < data.length; i*8) {
-            fiveDayForecastDiv.innerHTML = `${fullDate} <br> ${data.list.main.temp}`
-            console.log(data.list[i])
+            // for loop iterates through data array so only 5 temperatures show up  
+            for (i = 0; i < 5; i++) {
+                console.log(data.list[i].main.temp)
+                var temp = data.list[i].main.temp;
+                var tempEl = document.createElement("p");
+                tempEl.textContent = temp;
+                fiveDayForecastDiv.appendChild(tempEl); 
+                console.log(fiveDayForecastDiv)
+            }
+            //for loop to iterate through data array and display humidity
+            for (i = 0; i < 5; i++) {
+                console.log(data.list[i].main.humidity)
+                var fiveDayHumidity = data.list[i].main.humidity;
+                var fiveDayHumidityEl = document.createElement("p");
+                fiveDayHumidityEl.textContent = fiveDayHumidity;
+                fiveDayForecastDiv.appendChild(fiveDayHumidityEl); 
+                console.log(fiveDayForecastDiv)
+            
+            }
+            for (i = 0; i < 5; i++) {
+                console.log(data.list[i].wind.speed)
+                var fiveDayWind = data.list[i].wind.speed;
+                var fiveDayWindEl = document.createElement("p");
+                fiveDayWindEl.textContent = fiveDayWind;
+                fiveDayForecastDiv.appendChild(fiveDayWindEl); 
+                console.log(fiveDayForecastDiv)
+            
             }
         })
         .catch(error => {
-            console.error(error);
+            console.log(error);
         })
     
 
