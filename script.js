@@ -61,7 +61,7 @@ function callFetch(city) {
             var fiveDayWind = []
             console.log(data)
             // for loop iterates through data array so only 5 temperatures show up  
-            for (i = 0; i < 5; i++) {
+            for (i = 0; i < 5; i+8) {
                 console.log(data.list[i].main.temp)
                 temp.push(data.list[i].main.temp);
             }
@@ -76,10 +76,30 @@ function callFetch(city) {
                 fiveDayWind.push(data.list[i].wind.speed)
             }
 
-            //concatenate first values of each data variable
+            //concatenate values of each data variable
             var tempHumidWind1 = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
             var fiveDayDisplayEl = document.createElement("p")
             fiveDayDisplayEl.textContent = tempHumidWind1;
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+
+            var tempHumidWind2 = `${temp[1]} ${fiveDayHumidity[1]} ${fiveDayWind[1]}`
+            var fiveDayDisplayEl = document.createElement("p")
+            fiveDayDisplayEl.textContent = tempHumidWind2;
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+
+            var tempHumidWind3 = `${temp[2]} ${fiveDayHumidity[2]} ${fiveDayWind[2]}`
+            var fiveDayDisplayEl = document.createElement("p")
+            fiveDayDisplayEl.textContent = tempHumidWind3;
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+
+            var tempHumidWind4 = `${temp[3]} ${fiveDayHumidity[3]} ${fiveDayWind[3]}`
+            var fiveDayDisplayEl = document.createElement("p")
+            fiveDayDisplayEl.textContent = tempHumidWind4;
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+
+            var tempHumidWind5 = `${temp[4]} ${fiveDayHumidity[4]} ${fiveDayWind[4]}`
+            var fiveDayDisplayEl = document.createElement("p")
+            fiveDayDisplayEl.textContent = tempHumidWind5;
             fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
         
           
