@@ -64,38 +64,25 @@ function callFetch(city) {
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].main.temp)
                 temp.push(data.list[i].main.temp);
-                
-               /*  var tempEl = document.createElement("p");
-                tempEl.textContent = temp;
-                fiveDayForecastDiv.appendChild(tempEl); 
-                console.log(fiveDayForecastDiv) */
             }
             //for loop to iterate through data array and display humidity
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].main.humidity)
                 fiveDayHumidity.push(data.list[i].main.humidity);
-               
-                /* var fiveDayHumidityEl = document.createElement("p");
-                fiveDayHumidityEl.textContent = fiveDayHumidity;
-                fiveDayForecastDiv.appendChild(fiveDayHumidityEl); 
-                console.log(fiveDayForecastDiv) */  
             }
             //for loop to iterate through data array and displays wind speed
             for (i = 0; i < 5; i++) {
                 console.log(data.list[i].wind.speed)
                 fiveDayWind.push(data.list[i].wind.speed)
-                
-               /*  var fiveDayWindEl = document.createElement("p");
-                fiveDayWindEl.textContent = fiveDayWind;
-                fiveDayForecastDiv.appendChild(fiveDayWindEl); 
-                console.log(fiveDayForecastDiv) */
             }
-            
-        
-           /*  var tempHumidWind = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
+
+            //concatenate first values of each data variable
+            var tempHumidWind1 = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
             var fiveDayDisplayEl = document.createElement("p")
-            fiveDayDisplayEl.textcontent = tempHumidWind
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl) */
+            fiveDayDisplayEl.textContent = tempHumidWind1;
+            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+        
+          
 
         })
         .catch(error => {
