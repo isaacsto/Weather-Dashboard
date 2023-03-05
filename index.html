@@ -4,10 +4,10 @@
     <title>Weather Dashbord</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-    <header>
+    <headerh1>
         <h1>Weather Dashboard</h1>
     </header>
 
@@ -18,13 +18,21 @@
       <button id="searchBtn">Search</button>
     </div>
 
+
     <!--div to put data API pulls-->
-    <div id="weatherInfo"></div>
+    <div id="current-container">
+    <div id="weather-info" class="current"></div>
+    </div>
 
+    <!--made separate elements for the 5 day forecasts to be able to distinguish the days with css easily-->
+    <div id= "day-container">
+      <figure class="day" id="day-one"></figure>
+      <figure class="day" id="day-two"></figure>
+      <figure class="day" id="day-three"></figure>
+      <figure class="day" id="day-four"></figure>
+      <figure class="day" id="day-five"></figure>
 
-    <div id="fiveDayForecast"></div>
-    
-   
+  </div>
     
     <!--div to save search history-->
     <div id="searchHistory"></div>

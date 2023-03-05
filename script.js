@@ -4,10 +4,12 @@ var searchHistory = [];
 var city = []
 
 
-// defines fiveDayForecastDiv globally for fetch to circumvent dev tools error that showed up
-var fiveDayForecastDiv = document.querySelector("#fiveDayForecast");
-console.log(fiveDayForecastDiv);
-
+// defines days divs globally for fetch to circumvent dev tools error that showed up
+var dayOneDiv = document.querySelector("#day-one")
+var dayTwoDiv = document.querySelector("#day-two")
+var dayThreeDiv = document.querySelector("#day-three")
+var dayFourDiv = document.querySelector("#day-four")
+var dayFiveDiv = document.querySelector("#day-five")
 
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
 document.querySelector("#searchBtn").addEventListener("click", function () {
@@ -17,6 +19,10 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
         return;
     }
 callFetch(cityInput);
+
+//css display functions 
+displayCurrent()
+displayDays()
     
 })
 
@@ -24,7 +30,7 @@ function callFetch(city) {
    
     //gets date for display
     var currentDate = new Date();
-    var month = currentDate.getMonth();
+    var month = currentDate.getMonth() + 1;
     var day = currentDate.getDate();
     var year = currentDate.getFullYear();
     var fullDate = month + '/' + day + '/' + year;
@@ -35,14 +41,14 @@ function callFetch(city) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            var weatherInfoDiv = document.querySelector("#weatherInfo");
+            var weatherInfoDiv = document.querySelector("#weather-info");
             weatherInfoDiv.innerHTML = `${data.name} ${fullDate} <br> Temperature: ${data.main.temp}<br> Wind Speed: ${data.wind.speed}<br> Humidity: ${data.main.humidity}%`  
 
             //set weather data from API as div content
             //adds city to search history
             searchHistory.push(data.name);
             var searchHistoryDiv = document.querySelector("#searchHistory");
-            // searchHistoryDiv.innerHTML =  
+            //searchHistoryDiv.innerHTML =  
 
         })
         .catch(error => {
@@ -50,7 +56,7 @@ function callFetch(city) {
             alert("Unable to get weather data at this time")
         })
 
-    var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKey}`
+    var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${APIKey}`
 
     //fetches 5 day forecast`
     fetch(fiveDayForecast)
@@ -77,36 +83,59 @@ function callFetch(city) {
                 fiveDayWind.push(data.list[i].wind.speed)
             }
 
+            // get dates for fiveDayForecast
+            var newDates = new Date();
+            for (var i = 1; i <= 5; i++) {
+            var nextDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
+
+            var day = nextDate.getDate();
+            var month = nextDate.getMonth() + 1;
+            var year = nextDate.getFullYear();
+
+            var dateString = `${month}/${day}/${year}`
+            console.log(dateString)
+            }
+
             //concatenate values of each data variable
-            var tempHumidWind1 = `${temp[0]} ${fiveDayHumidity[0]} ${fiveDayWind[0]}`
-            var fiveDayDisplayEl = document.createElement("p")
-            fiveDayDisplayEl.textContent = tempHumidWind1;
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+            var tempHumidWind1 = `${dateString} Temp:${temp[0]} Humidity:${fiveDayHumidity[0]} Wind-speed:${fiveDayWind[0]}`
+            var dayOneEl = document.createElement("p")
+            dayOneEl.textContent = tempHumidWind1;
+            dayOneDiv.appendChild(dayOneEl);
 
-            var tempHumidWind2 = `${temp[1]} ${fiveDayHumidity[1]} ${fiveDayWind[1]}`
-            var fiveDayDisplayEl = document.createElement("p")
-            fiveDayDisplayEl.textContent = tempHumidWind2;
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+            var tempHumidWind2= `${dateString}Temp:${temp[1]} Humidity:${fiveDayHumidity[1]} Wind-speed:${fiveDayWind[1]}`
+            var dayTwoEl = document.createElement("p")
+            dayTwoEl.textContent = tempHumidWind2;
+            dayTwoDiv.appendChild(dayTwoEl);
 
-            var tempHumidWind3 = `${temp[2]} ${fiveDayHumidity[2]} ${fiveDayWind[2]}`
-            var fiveDayDisplayEl = document.createElement("p")
-            fiveDayDisplayEl.textContent = tempHumidWind3;
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+            var tempHumidWind3 = `${dateString}Temp:${temp[2]} Humidity:${fiveDayHumidity[2]} Wind-speed:${fiveDayWind[2]}`
+            var dayThreeEl = document.createElement("p")
+            dayThreeEl.textContent = tempHumidWind3;
+            dayThreeDiv.appendChild(dayThreeEl);
 
-            var tempHumidWind4 = `${temp[3]} ${fiveDayHumidity[3]} ${fiveDayWind[3]}`
-            var fiveDayDisplayEl = document.createElement("p")
-            fiveDayDisplayEl.textContent = tempHumidWind4;
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+            var tempHumidWind4 = `${dateString}Temp:${temp[3]} Humidity:${fiveDayHumidity[3]} Wind-speed:${fiveDayWind[3]}`
+            var dayFourEl = document.createElement("p")
+            dayFourEl.textContent = tempHumidWind4;
+            dayFourDiv.appendChild(dayFourEl);
 
-            var tempHumidWind5 = `${temp[4]} ${fiveDayHumidity[4]} ${fiveDayWind[4]}`
-            var fiveDayDisplayEl = document.createElement("p")
-            fiveDayDisplayEl.textContent = tempHumidWind5;
-            fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
+            var tempHumidWind5 = `${dateString}Temp:${temp[4]} Humidity:${fiveDayHumidity[4]} Wind-speed:${fiveDayWind[4]}`
+            var dayFiveEl = document.createElement("p")
+            dayFiveEl.textContent = tempHumidWind5;
+            dayFiveDiv.appendChild(dayFiveEl);
         })
        
         .catch(error => {
             console.error("An error occured while fetching the data:", error);
         })
     
+    }
+
+//functions so css properties don't show up until the search button is pressed 
+    function displayDays() {
+        var container = document.getElementById("day-container");
+        container.classList.add("displayed")
+    }
+    function displayCurrent() {
+        var currentContainer = document.getElementById("current-container");
+        currentContainer.classList.add("displayed")
     }
 

@@ -1,0 +1,26 @@
+h1 {
+   background-color:#2E5E4E;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   color: #DBD3D8; 
+ 
+
+}
+
+
+.displayed .day {
+    display: flex;
+    flex-direction: row;
+    background-color: #A7B5B9;
+    border: 2px solid #2E5E4E;
+    max-width: 150px;
+
+}
+
+.displayed .current {
+    border: 2px solid #2E5E4E
+}
+
+/* #2E5E4E
+#DBD3D8
+#93A7AA
+#A7B5B9 */
