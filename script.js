@@ -42,8 +42,9 @@ function callFetch(city) {
         .then(data => {
             console.log(data)
             var weatherInfoDiv = document.querySelector("#weather-info");
-            weatherInfoDiv.innerHTML = `${data.name} ${fullDate} <br> Temperature: ${data.main.temp}<br> Wind Speed: ${data.wind.speed}<br> Humidity: ${data.main.humidity}%`  
-
+            //classes for css
+            weatherInfoDiv.innerHTML = `<h2 class="weather-head">${data.name} ${fullDate}</h2><br> <p class="dat">Temperature: ${data.main.temp} °F</p><br> <p class="dat">Wind Speed: ${data.wind.speed} mph</p><br> <p class="dat">Humidity: ${data.main.humidity}% </p>`  
+            
             //set weather data from API as div content
             //adds city to search history
             searchHistory.push(data.name);
@@ -84,7 +85,7 @@ function callFetch(city) {
             }
 
             // get dates for fiveDayForecast
-            var newDates = new Date();
+            var newDates = []
             for (var i = 1; i <= 5; i++) {
             var nextDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
 
@@ -94,34 +95,53 @@ function callFetch(city) {
 
             var dateString = `${month}/${day}/${year}`
             console.log(dateString)
+            //pushes dateString to a var so I can pull each index for each forecast element
+            newDates.push(dateString)
             }
 
             //concatenate values of each data variable
-            var tempHumidWind1 = `${dateString} Temp:${temp[0]} Humidity:${fiveDayHumidity[0]} Wind-speed:${fiveDayWind[0]}`
+            var tempHumidWind1 = `${newDates[0]}<br>
+            <br>Temp: ${temp[0]} °F<br>
+            <br>Humidity: ${fiveDayHumidity[0]} %<br>
+            <br>Wind-speed: ${fiveDayWind[0]} mph`
             var dayOneEl = document.createElement("p")
-            dayOneEl.textContent = tempHumidWind1;
+            dayOneEl.innerHTML = tempHumidWind1;
             dayOneDiv.appendChild(dayOneEl);
 
-            var tempHumidWind2= `${dateString}Temp:${temp[1]} Humidity:${fiveDayHumidity[1]} Wind-speed:${fiveDayWind[1]}`
+            var tempHumidWind2= `${newDates[1]} <br>
+            <br>Temp: ${temp[1]} °F<br>
+            <br>Humidity: ${fiveDayHumidity[1]} %<br>
+            <br>Wind-speed:  ${fiveDayWind[1]} mph`
             var dayTwoEl = document.createElement("p")
-            dayTwoEl.textContent = tempHumidWind2;
+            dayTwoEl.innerHTML = tempHumidWind2;
             dayTwoDiv.appendChild(dayTwoEl);
 
-            var tempHumidWind3 = `${dateString}Temp:${temp[2]} Humidity:${fiveDayHumidity[2]} Wind-speed:${fiveDayWind[2]}`
+            var tempHumidWind3 = `${newDates[2]} <br>
+            <br>Temp: ${temp[2]} °F<br>
+            <br>Humidity:${fiveDayHumidity[2]} %<br>
+            <br>Wind-speed: ${fiveDayWind[2]} mph`
             var dayThreeEl = document.createElement("p")
-            dayThreeEl.textContent = tempHumidWind3;
+            dayThreeEl.innerHTML = tempHumidWind3;
             dayThreeDiv.appendChild(dayThreeEl);
 
-            var tempHumidWind4 = `${dateString}Temp:${temp[3]} Humidity:${fiveDayHumidity[3]} Wind-speed:${fiveDayWind[3]}`
+            var tempHumidWind4 = `${newDates[3]} <br>
+            <br>Temp: ${temp[3]} °F<br>
+            <br>Humidity: ${fiveDayHumidity[3]} %<br>
+            <br>Wind-speed: ${fiveDayWind[3]} mph`
             var dayFourEl = document.createElement("p")
-            dayFourEl.textContent = tempHumidWind4;
+            dayFourEl.innerHTML = tempHumidWind4;
             dayFourDiv.appendChild(dayFourEl);
 
-            var tempHumidWind5 = `${dateString}Temp:${temp[4]} Humidity:${fiveDayHumidity[4]} Wind-speed:${fiveDayWind[4]}`
+            var tempHumidWind5 = `${newDates[4]} <br>
+            <br>Temp: ${temp[4]}  °F<br>
+            <br>Humidity:${fiveDayHumidity[4]} %<br>
+            <br>Wind-speed: ${fiveDayWind[4]} mph`
             var dayFiveEl = document.createElement("p")
-            dayFiveEl.textContent = tempHumidWind5;
+            dayFiveEl.innerHTML = tempHumidWind5;
             dayFiveDiv.appendChild(dayFiveEl);
+            
         })
+    
        
         .catch(error => {
             console.error("An error occured while fetching the data:", error);
