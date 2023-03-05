@@ -50,8 +50,9 @@ function callFetch(city) {
             alert("Unable to get weather data at this time")
         })
 
-    var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKey}` 
-    //fetches 5 day forecast
+    var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKey}`
+
+    //fetches 5 day forecast`
     fetch(fiveDayForecast)
         .then(response => response.json())
         .then(data => {
@@ -61,17 +62,17 @@ function callFetch(city) {
             var fiveDayWind = []
             console.log(data)
             // for loop iterates through data array so only 5 temperatures show up  
-            for (i = 0; i < 5; i+8) {
+            for (i = 0; i < 40; i += 8) {
                 console.log(data.list[i].main.temp)
                 temp.push(data.list[i].main.temp);
             }
             //for loop to iterate through data array and display humidity
-            for (i = 0; i < 5; i++) {
+            for (i = 0; i < 40; i += 8) {
                 console.log(data.list[i].main.humidity)
                 fiveDayHumidity.push(data.list[i].main.humidity);
             }
             //for loop to iterate through data array and displays wind speed
-            for (i = 0; i < 5; i++) {
+            for (i = 0; i < 40; i += 8) {
                 console.log(data.list[i].wind.speed)
                 fiveDayWind.push(data.list[i].wind.speed)
             }
@@ -101,14 +102,11 @@ function callFetch(city) {
             var fiveDayDisplayEl = document.createElement("p")
             fiveDayDisplayEl.textContent = tempHumidWind5;
             fiveDayForecastDiv.appendChild(fiveDayDisplayEl);
-        
-          
-
         })
+       
         .catch(error => {
-            console.log(error);
+            console.error("An error occured while fetching the data:", error);
         })
     
-
-}
+    }
 
