@@ -18,16 +18,17 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
         alert("Please Enter a valid city name")
         return;
     }
-callFetch(cityInput);
+    callFetch(cityInput);
 
-//css display functions 
-displayCurrent()
-displayDays()
-    
+    //css display functions 
+    displayCurrent()
+    displayDays()
+
+
 })
 
 function callFetch(city) {
-   
+
     //gets date for display
     var currentDate = new Date();
     var month = currentDate.getMonth() + 1;
@@ -43,18 +44,38 @@ function callFetch(city) {
             console.log(data)
             var weatherInfoDiv = document.querySelector("#weather-info");
             //classes for css
-            weatherInfoDiv.innerHTML = `<h2 class="weather-head">${data.name} ${fullDate}</h2><br> <p class="dat">Temperature: ${data.main.temp} °F</p><br> <p class="dat">Wind Speed: ${data.wind.speed} mph</p><br> <p class="dat">Humidity: ${data.main.humidity}% </p>`  
-            
-            //set weather data from API as div content
-            //adds city to search history
-            searchHistory.push(data.name);
-            var searchHistoryDiv = document.querySelector("#searchHistory");
-            //searchHistoryDiv.innerHTML =  
+            weatherInfoDiv.innerHTML = `<h2 class="weather-head">${data.name} ${fullDate}</h2><br> <p class="dat">Temperature: ${data.main.temp} °F</p><br> <p class="dat">Wind Speed: ${data.wind.speed} mph</p><br> <p class="dat">Humidity: ${data.main.humidity}% </p>`
 
-        })
-        .catch(error => {
-            console.log(error);
-            alert("Unable to get weather data at this time")
+            //Add city to search history when search button is clicked
+            
+            var searchButton = document.querySelector("#searchBtn")
+            searchButton.addEventListener("click", function () {
+                var city = cityInput.value;
+                getWeather(city);
+                cityInput.value = "";
+                
+                var searchHistoryDiv = document.querySelector
+                ("#searchHistory");
+
+                // Check if the city is already in the search history
+                if (!searchHistory.includes(city)) {
+                    searchHistory.push(city);
+                    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+
+                    searchHistoryDiv.innerHTML = "";
+
+                    // Create a list of search items and append it to searchHistoryDiv
+                    var searchHistoryList = document.createElement("ul");
+                    searchHistory.forEach(function (search) {
+                        var searchItem = document.createElement("button");
+                        searchItem.textContent = search;
+                        searchHistoryList.appendChild(searchItem);
+                    })
+                    searchHistoryDiv.appendChild(searchHistoryList)
+                }
+            })
+
+
         })
 
     var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${APIKey}`
@@ -87,17 +108,18 @@ function callFetch(city) {
             // get dates for fiveDayForecast
             var newDates = []
             for (var i = 1; i <= 5; i++) {
-            var nextDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
+                var nextDate = new Date(currentDate.getTime() + i * 24 * 60 * 60 * 1000);
 
-            var day = nextDate.getDate();
-            var month = nextDate.getMonth() + 1;
-            var year = nextDate.getFullYear();
+                var day = nextDate.getDate();
+                var month = nextDate.getMonth() + 1;
+                var year = nextDate.getFullYear();
 
-            var dateString = `${month}/${day}/${year}`
-            console.log(dateString)
-            //pushes dateString to a var so I can pull each index for each forecast element
-            newDates.push(dateString)
+                var dateString = `${month}/${day}/${year}`
+                console.log(dateString)
+                //pushes dateString to a var so I can pull each index for each forecast element
+                newDates.push(dateString)
             }
+
 
             //concatenate values of each data variable
             var tempHumidWind1 = `${newDates[0]}<br>
@@ -108,7 +130,7 @@ function callFetch(city) {
             dayOneEl.innerHTML = tempHumidWind1;
             dayOneDiv.appendChild(dayOneEl);
 
-            var tempHumidWind2= `${newDates[1]} <br>
+            var tempHumidWind2 = `${newDates[1]} <br>
             <br>Temp: ${temp[1]} °F<br>
             <br>Humidity: ${fiveDayHumidity[1]} %<br>
             <br>Wind-speed:  ${fiveDayWind[1]} mph`
@@ -139,23 +161,19 @@ function callFetch(city) {
             var dayFiveEl = document.createElement("p")
             dayFiveEl.innerHTML = tempHumidWind5;
             dayFiveDiv.appendChild(dayFiveEl);
-            
         })
-    
-       
         .catch(error => {
             console.error("An error occured while fetching the data:", error);
         })
-    
-    }
+
+}
 
 //functions so css properties don't show up until the search button is pressed 
-    function displayDays() {
-        var container = document.getElementById("day-container");
-        container.classList.add("displayed")
-    }
-    function displayCurrent() {
-        var currentContainer = document.getElementById("current-container");
-        currentContainer.classList.add("displayed")
-    }
-
+function displayDays() {
+    var container = document.getElementById("day-container");
+    container.classList.add("displayed")
+}
+function displayCurrent() {
+    var currentContainer = document.getElementById("current-container");
+    currentContainer.classList.add("displayed")
+} 
