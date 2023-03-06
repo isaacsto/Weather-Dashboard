@@ -27,6 +27,33 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
+var searchHistoryButton = document.querySelector("#searchHistoryBtn")
+searchHistoryButton.addEventListener("click", function () {
+        var city = cityInput.value;
+        //callFetch(city);
+        cityInput.value = "";
+        
+        var searchHistoryDiv = document.querySelector
+        ("#searchHistory");
+
+        // Check if city is already in search history
+        if (!searchHistory.includes(city)) {
+            searchHistory.push(city);
+            localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+
+            searchHistoryDiv.innerHTML = "";
+
+            // Creates list of search items and appends it to searchHistoryDiv
+            var searchHistoryList = document.createElement("ul");
+            searchHistory.forEach(function (search) {
+                var searchItem = document.createElement("button");
+                searchItem.textContent = search;
+                searchHistoryList.appendChild(searchItem);
+            })
+            searchHistoryDiv.appendChild(searchHistoryList)
+        }
+    })
+
 function callFetch(city) {
 
     //gets date for display
@@ -47,36 +74,10 @@ function callFetch(city) {
             weatherInfoDiv.innerHTML = `<h2 class="weather-head">${data.name} ${fullDate}</h2><br> <p class="dat">Temperature: ${data.main.temp} °F</p><br> <p class="dat">Wind Speed: ${data.wind.speed} mph</p><br> <p class="dat">Humidity: ${data.main.humidity}% </p>`
 
             //Add city to search history when search button is clicked
-            
-            var searchButton = document.querySelector("#searchBtn")
-            searchButton.addEventListener("click", function () {
-                var city = cityInput.value;
-                getWeather(city);
-                cityInput.value = "";
-                
-                var searchHistoryDiv = document.querySelector
-                ("#searchHistory");
-
-                // Check if the city is already in the search history
-                if (!searchHistory.includes(city)) {
-                    searchHistory.push(city);
-                    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-
-                    searchHistoryDiv.innerHTML = "";
-
-                    // Create a list of search items and append it to searchHistoryDiv
-                    var searchHistoryList = document.createElement("ul");
-                    searchHistory.forEach(function (search) {
-                        var searchItem = document.createElement("button");
-                        searchItem.textContent = search;
-                        searchHistoryList.appendChild(searchItem);
-                    })
-                    searchHistoryDiv.appendChild(searchHistoryList)
-                }
-            })
-
 
         })
+
+    
 
     var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${APIKey}`
 
