@@ -27,19 +27,32 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
+window.onload = function() {
+    var searchHist = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    var searchHistDiv = document.querySelector("#searchHistory")
+    var searchHistList = document.createElement("ul");
+    searchHist.forEach(function(search) {
+        var searchItem = document.createElement("button");
+        searchItem.textContent = search;
+        searchHistList.appendChild(searchItem);
+    })
+   searchHistDiv.appendChild(searchHistList)
+}
+
 //selects html element, adds eventlistener,
 var searchButton = document.querySelector("#searchBtn")
 searchButton.addEventListener("click", function () {
         var city = cityInput.value;
         cityInput.value = "";
         
+        /* var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) */
         var searchHistoryDiv = document.querySelector
         ("#searchHistory");
 
         // Check if city is already in search history
         if (!searchHistory.includes(city)) {
             searchHistory.push(city);
-            localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+            localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) || [];
             
 
             searchHistoryDiv.innerHTML = "";
@@ -53,8 +66,8 @@ searchButton.addEventListener("click", function () {
             })
             searchHistoryDiv.appendChild(searchHistoryList)
         }
-
-        localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
+/* 
+        localStorage.getItem("searchHistory", JSON.stringify(searchHistory)); */
     })
 
 function callFetch(city) {
