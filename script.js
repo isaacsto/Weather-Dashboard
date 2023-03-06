@@ -27,10 +27,10 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
-var searchHistoryButton = document.querySelector("#searchHistoryBtn")
-searchHistoryButton.addEventListener("click", function () {
+//selects html element, adds eventlistener,
+var searchButton = document.querySelector("#searchBtn")
+searchButton.addEventListener("click", function () {
         var city = cityInput.value;
-        //callFetch(city);
         cityInput.value = "";
         
         var searchHistoryDiv = document.querySelector
@@ -40,6 +40,7 @@ searchHistoryButton.addEventListener("click", function () {
         if (!searchHistory.includes(city)) {
             searchHistory.push(city);
             localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+            
 
             searchHistoryDiv.innerHTML = "";
 
@@ -52,6 +53,8 @@ searchHistoryButton.addEventListener("click", function () {
             })
             searchHistoryDiv.appendChild(searchHistoryList)
         }
+
+        localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
     })
 
 function callFetch(city) {
