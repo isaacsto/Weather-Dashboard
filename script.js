@@ -50,12 +50,6 @@ function displayHistory() {
 addToHistory();
 displayHistory();
 
-for (i = 0; i < searchHistory.length; i++) {
-    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
-        callFetch(searchHistory[i])
-    })
-}
-
 
 
 console.log('searchHistory:', searchHistory);
@@ -73,8 +67,6 @@ function historyData() {
       });
     }
   }
-  
-
 
 
 function callFetch(city) {
@@ -210,15 +202,21 @@ window.onload = function() {
 }
 
 //call addToHistory() when search 
-
 document.getElementById("searchBtn").addEventListener('click', function() {
     addToHistory(searchTerm);
 })
 
   
-  searchInput.addEventListener('keyup', function(event) {
+searchInput.addEventListener('keyup', function(event) {
     if (event.key === 'Enter') {
       callFetch(searchInput.value);
     }
   });
+
+
+for (i = 0; i < searchHistory.length; i++) {
+    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
+        callFetch(searchHistory[i])
+    })
+}
   
