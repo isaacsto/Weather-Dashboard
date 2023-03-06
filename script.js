@@ -1,4 +1,6 @@
 //coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys
+
+//APIKey/initialize arrays
 var APIKey = "e87ec7f203ff2e1f695f40b6fe50b1e1";
 var searchHistory = [];
 var city = []
@@ -26,19 +28,12 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
+//defines variables necessary for search history display/functionality 
 var searchButton = document.querySelector("#searchBtn")
 var searchInput = document.querySelector("#cityInput")
 var searchTerm = document.getElementById("cityInput").value;
 
-
-//initialize array
-var searchHistory = []
-
-// function to add search term to search history arr 
-function addToHistory(searchTerm) {
-    searchHistory.push(searchTerm);
-    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-}
+//function to display search history
 function displayHistory() {
     var historyButtons = '';
     for (i = 0; i < searchHistory.length; i++) {
@@ -47,26 +42,22 @@ function displayHistory() {
     document.getElementById("searchHistory").innerHTML = historyButtons; 
 
 }
-addToHistory();
+
+
 displayHistory();
 
+
+//loops through searchHistory arr selects historyButtons element, adds event listener on historyButton click to callFetch and push values to element 
+for (i = 0; i < searchHistory.length; i++) {
+    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
+        callFetch(searchHistory.push(searchTerm))
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+})
+}
 
 
 console.log('searchHistory:', searchHistory);
 
-
-function historyData() {
-    let historyButtons = '';
-    for (let i = 0; i < searchHistory.length; i++) {
-      historyButtons += `<button id="historyButton${i}" class="historyButton">${searchHistory[i]}</button>`;
-    }
-    document.getElementById('history').innerHTML = historyButtons;
-    for (let i = 0; i < searchHistory.length; i++) {
-      document.getElementById(`historyButton${i}`).addEventListener('click', function() {
-        callFetch(searchHistory[i]);
-      });
-    }
-  }
 
 
 function callFetch(city) {
@@ -200,23 +191,7 @@ function displayCurrent() {
 window.onload = function() {
     displayHistory();
 }
-
-//call addToHistory() when search 
-document.getElementById("searchBtn").addEventListener('click', function() {
-    addToHistory(searchTerm);
-})
-
   
-searchInput.addEventListener('keyup', function(event) {
-    if (event.key === 'Enter') {
-      callFetch(searchInput.value);
-    }
-  });
 
 
-for (i = 0; i < searchHistory.length; i++) {
-    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
-        callFetch(searchHistory[i])
-    })
-}
   
