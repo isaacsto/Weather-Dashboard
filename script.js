@@ -24,51 +24,58 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
     displayCurrent()
     displayDays()
 
-
 })
 
-window.onload = function() {
-    var searchHist = JSON.parse(localStorage.getItem("searchHistory")) || [];
-    var searchHistDiv = document.querySelector("#searchHistory")
-    var searchHistList = document.createElement("ul");
-    searchHist.forEach(function(search) {
-        var searchItem = document.createElement("button");
-        searchItem.textContent = search;
-        searchHistList.appendChild(searchItem);
+var searchButton = document.querySelector("#searchBtn")
+var searchInput = document.querySelector("#cityInput")
+var searchTerm = document.getElementById("cityInput").value;
+
+
+//initialize array
+var searchHistory = []
+
+// function to add search term to search history arr 
+function addToHistory(searchTerm) {
+    searchHistory.push(searchTerm);
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
+function displayHistory() {
+    var historyButtons = '';
+    for (i = 0; i < searchHistory.length; i++) {
+        historyButtons += `<button id="historyButton${i}" class="historyButton">${searchHistory[i]}</button>`;
+    }
+    document.getElementById("searchHistory").innerHTML = historyButtons; 
+
+}
+addToHistory();
+displayHistory();
+
+for (i = 0; i < searchHistory.length; i++) {
+    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
+        callFetch(searchHistory[i])
     })
-   searchHistDiv.appendChild(searchHistList)
 }
 
-//selects html element, adds eventlistener,
-var searchButton = document.querySelector("#searchBtn")
-searchButton.addEventListener("click", function () {
-        var city = cityInput.value;
-        cityInput.value = "";
-        
-        /* var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) */
-        var searchHistoryDiv = document.querySelector
-        ("#searchHistory");
 
-        // Check if city is already in search history
-        if (!searchHistory.includes(city)) {
-            searchHistory.push(city);
-            localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) || [];
-            
 
-            searchHistoryDiv.innerHTML = "";
+console.log('searchHistory:', searchHistory);
 
-            // Creates list of search items and appends it to searchHistoryDiv
-            var searchHistoryList = document.createElement("ul");
-            searchHistory.forEach(function (search) {
-                var searchItem = document.createElement("button");
-                searchItem.textContent = search;
-                searchHistoryList.appendChild(searchItem);
-            })
-            searchHistoryDiv.appendChild(searchHistoryList)
-        }
-/* 
-        localStorage.getItem("searchHistory", JSON.stringify(searchHistory)); */
-    })
+
+function historyData() {
+    let historyButtons = '';
+    for (let i = 0; i < searchHistory.length; i++) {
+      historyButtons += `<button id="historyButton${i}" class="historyButton">${searchHistory[i]}</button>`;
+    }
+    document.getElementById('history').innerHTML = historyButtons;
+    for (let i = 0; i < searchHistory.length; i++) {
+      document.getElementById(`historyButton${i}`).addEventListener('click', function() {
+        callFetch(searchHistory[i]);
+      });
+    }
+  }
+  
+
+
 
 function callFetch(city) {
 
@@ -91,6 +98,7 @@ function callFetch(city) {
 
             //Add city to search history when search button is clicked
 
+
         })
 
     
@@ -101,6 +109,8 @@ function callFetch(city) {
     fetch(fiveDayForecast)
         .then(response => response.json())
         .then(data => {
+            searchHistory.push(searchTerm);
+            displayHistory();
             //makes variables arrays so data can more easily be extracted for the display
             var temp = []
             var fiveDayHumidity = []
@@ -136,7 +146,6 @@ function callFetch(city) {
                 //pushes dateString to a var so I can pull each index for each forecast element
                 newDates.push(dateString)
             }
-
 
             //concatenate values of each data variable
             var tempHumidWind1 = `${newDates[0]}<br>
@@ -194,3 +203,22 @@ function displayCurrent() {
     var currentContainer = document.getElementById("current-container");
     currentContainer.classList.add("displayed")
 } 
+
+//call displayHistory 
+window.onload = function() {
+    displayHistory();
+}
+
+//call addToHistory() when search 
+
+document.getElementById("searchBtn").addEventListener('click', function() {
+    addToHistory(searchTerm);
+})
+
+  
+  searchInput.addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+      callFetch(searchInput.value);
+    }
+  });
+  
