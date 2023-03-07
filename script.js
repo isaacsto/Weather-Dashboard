@@ -52,12 +52,11 @@ window.onload = function() {
 console.log(searchTerm)
 
 
+
 //defines variables necessary for search history display/functionality 
 /* var searchButton = document.querySelector("#searchBtn")
 var searchInput = document.querySelector("#cityInput")
 var searchTerm = document.getElementById("cityInput").value; */
-
-
 
 
 //loops through searchHistory arr selects historyButtons element, adds event listener on historyButton click to callFetch and push values to element 
