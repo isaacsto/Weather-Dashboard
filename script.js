@@ -31,6 +31,7 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 //call displayHistory on load 
 window.onload = function() {
     displayHistory();
+    localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
 }
 
 //defines variables necessary for search history display/functionality 
@@ -40,11 +41,14 @@ var searchTerm = document.getElementById("cityInput").value;
 
 
 
+
 //loops through searchHistory arr selects historyButtons element, adds event listener on historyButton click to callFetch and push values to element 
 for (i = 0; i < searchHistory.length; i++) {
     document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
         callFetch(searchHistory.push(searchTerm))
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    
+    displayHistory();
 })
 }
 
@@ -55,7 +59,9 @@ function displayHistory() {
         historyButtons += `<button id="historyButton${i}" class="historyButton">${searchHistory[i]}</button>`;
     }
     document.getElementById("searchHistory").innerHTML = historyButtons; 
-
+    localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
+    
+    
 }
 
 displayHistory();
@@ -96,7 +102,9 @@ function callFetch(city) {
     fetch(fiveDayForecast)
         .then(response => response.json())
         .then(data => {
-            searchHistory.push(searchTerm);
+            //pushes searched items to searchHistory var 
+            searchHistory.push(data.city.name);
+            console.log(searchHistory)
             displayHistory();
             //makes variables arrays so data can more easily be extracted for the display
             var temp = []
