@@ -28,16 +28,34 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
-//call displayHistory on load 
-window.onload = function() {
-    displayHistory();
-    localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
+
+function saveCity() {
+    var searchInput = document.getElementById('cityInput');
+    var searchValue = searchInput.value;
+    lcoalStorage.setItem("cityInput", searchValue)
 }
 
+
+//call displayHistory on load 
+window.onload = function() {
+    var searchInput = document.getElementById('cityInput');
+    var savedSearchValue = localStorage.getItem('searchValue');
+    if (savedSearchValue) {
+        searchInput.value = savedSearchValue
+    }
+ /*    displayHistory();
+    localStorage.getItem("searchHistory", JSON.stringify(searchHistory)); */
+}
+
+
+
+console.log(searchTerm)
+
+
 //defines variables necessary for search history display/functionality 
-var searchButton = document.querySelector("#searchBtn")
+/* var searchButton = document.querySelector("#searchBtn")
 var searchInput = document.querySelector("#cityInput")
-var searchTerm = document.getElementById("cityInput").value;
+var searchTerm = document.getElementById("cityInput").value; */
 
 
 
