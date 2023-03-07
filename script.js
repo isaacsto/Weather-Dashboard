@@ -28,10 +28,25 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
+//call displayHistory on load 
+window.onload = function() {
+    displayHistory();
+}
+
 //defines variables necessary for search history display/functionality 
 var searchButton = document.querySelector("#searchBtn")
 var searchInput = document.querySelector("#cityInput")
 var searchTerm = document.getElementById("cityInput").value;
+
+
+
+//loops through searchHistory arr selects historyButtons element, adds event listener on historyButton click to callFetch and push values to element 
+for (i = 0; i < searchHistory.length; i++) {
+    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
+        callFetch(searchHistory.push(searchTerm))
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+})
+}
 
 //function to display search history
 function displayHistory() {
@@ -43,23 +58,12 @@ function displayHistory() {
 
 }
 
-
 displayHistory();
-
-
-//loops through searchHistory arr selects historyButtons element, adds event listener on historyButton click to callFetch and push values to element 
-for (i = 0; i < searchHistory.length; i++) {
-    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
-        callFetch(searchHistory.push(searchTerm))
-    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-})
-}
-
 
 console.log('searchHistory:', searchHistory);
 
 
-
+//passes city as argument function that hold both current and 5 day forecast fetches 
 function callFetch(city) {
 
     //gets date for display
@@ -187,10 +191,7 @@ function displayCurrent() {
     currentContainer.classList.add("displayed")
 } 
 
-//call displayHistory 
-window.onload = function() {
-    displayHistory();
-}
+
   
 
 
