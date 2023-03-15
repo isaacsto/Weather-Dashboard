@@ -23,9 +23,12 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
     if (cityInput === "") {
         alert("Please Enter a valid city name")
         return;
-    } else {
-    cityHistory = localStorage.setItem("cityInput", searchValue)    
     }
+    
+    searchHistory.push(searchValue)
+    
+    localStorage.setItem("searchHistory", JSON.stringify("searchValue")) ;
+
     callFetch(cityInput);
 
     //css display functions 
@@ -34,15 +37,17 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
+    
+
 
 
 
 
 //call displayHistory on load 
-window.onload = displayHistory()
+window.onload = displayHistory();
 
 function displayHistory (searchValue) {
-    localStorage.getItem("searchValue", JSON.stringify(searchValue))
+    localStorage.getItem("searchHistory", JSON.stringify(searchValue))
     var historyContainer = document.querySelector('#searchHistory')
         if (searchHistory.length > 0) {
             searchHistory.forEach(searchValue => {
