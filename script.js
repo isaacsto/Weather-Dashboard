@@ -137,8 +137,48 @@ function callFetch(city) {
                 newDates.push(dateString)
             }
 
+           //cleardiv 
+            dayOneDiv.innerHTML = ''; 
+           
+            dayTwoDiv.innerHTML = '';
+        
+            dayThreeDiv.innerHTML = '';
+            
+            dayFourDiv.innerHTML = '';
+            
+            dayFiveDiv.innerHTML = '';
+            
+
+
             //concatenate values of each data variable
-            var tempHumidWind1 = `${newDates[0]}<br>
+            
+            for (i = 0; i < 5; i++) {
+                var dayDiv = document.querySelector("card-container");
+                dayDiv.innerHTML = `
+                <p>${newDates[i]}</p>
+                <p>Temp: ${temp[i]} °F</p>
+                <p>Humidity: ${fiveDayHumidity[i]} %</p>
+                <p>Wind-speed: ${fiveDayWind[i]} mph</p>`
+            }
+
+            //append new div element to corresponding day div 
+
+            if (i === 0) {
+                dayOneDiv.appendChild(dayDiv);
+            } else if (i === 1) {
+                dayTwoDiv.appendChild(dayDiv);
+            } else if (i === 2) {
+                dayThreeDiv.appendChild(dayDiv);
+            } else if (i === 3) {
+                dayFourDiv.appendChild(dayDiv);
+            } else if (i === 4) {
+                dayFiveDiv.appendChild(dayDiv)
+            }
+            
+        
+
+
+     /*        var tempHumidWind1 = `${newDates[0]}<br>
             <br>Temp: ${temp[0]} °F<br>
             <br>Humidity: ${fiveDayHumidity[0]} %<br>
             <br>Wind-speed: ${fiveDayWind[0]} mph`
@@ -146,6 +186,7 @@ function callFetch(city) {
             dayOneEl.innerHTML = tempHumidWind1;
             dayOneDiv.appendChild(dayOneEl);
 
+            
             var tempHumidWind2 = `${newDates[1]} <br>
             <br>Temp: ${temp[1]} °F<br>
             <br>Humidity: ${fiveDayHumidity[1]} %<br>
@@ -154,6 +195,7 @@ function callFetch(city) {
             dayTwoEl.innerHTML = tempHumidWind2;
             dayTwoDiv.appendChild(dayTwoEl);
 
+            
             var tempHumidWind3 = `${newDates[2]} <br>
             <br>Temp: ${temp[2]} °F<br>
             <br>Humidity:${fiveDayHumidity[2]} %<br>
@@ -161,7 +203,8 @@ function callFetch(city) {
             var dayThreeEl = document.createElement("p")
             dayThreeEl.innerHTML = tempHumidWind3;
             dayThreeDiv.appendChild(dayThreeEl);
-
+            
+            
             var tempHumidWind4 = `${newDates[3]} <br>
             <br>Temp: ${temp[3]} °F<br>
             <br>Humidity: ${fiveDayHumidity[3]} %<br>
@@ -170,17 +213,48 @@ function callFetch(city) {
             dayFourEl.innerHTML = tempHumidWind4;
             dayFourDiv.appendChild(dayFourEl);
 
+            
             var tempHumidWind5 = `${newDates[4]} <br>
             <br>Temp: ${temp[4]}  °F<br>
             <br>Humidity:${fiveDayHumidity[4]} %<br>
             <br>Wind-speed: ${fiveDayWind[4]} mph`
             var dayFiveEl = document.createElement("p")
             dayFiveEl.innerHTML = tempHumidWind5;
-            dayFiveDiv.appendChild(dayFiveEl);
+            dayFiveDiv.appendChild(dayFiveEl); */
         })
         .catch(error => {
             console.error("An error occured while fetching the data:", error);
         })
+
+}
+
+function createCard(data) {
+    var card = document.createElement('div');
+    card.classList.add('card')
+
+    var cardBody = document.createElement('div')
+    cardBody.classList.add('card-body');
+
+    var city = document.createElement('h5');
+    city.classList.add('card-title');
+    city.textContent = data.name;
+
+    var temp = document.createElement('p');
+    temp.classList.add('card-text');
+    temp.textContent = 'Temperature ' + data.main.temp + '°F';
+
+    var humidity = document.createElement('p');
+    humidity.classList.add('card-text');
+    humidity.textContent = 'Humidity: ' + data.main.humidity + '%'
+
+    cardBody.appendChild(city);
+    cardBody.appendChild(temp);
+    cardBody.appendChild(humidity);
+
+    card.appendChild(cardBody)
+
+    var container = dcoument.querySelector('.card-container')
+    container.appendChild(card);
 
 }
 
