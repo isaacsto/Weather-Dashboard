@@ -6,6 +6,7 @@ var searchHistory = [];
 var city = []
 
 
+
 // defines days divs globally for fetch to circumvent dev tools error that showed up
 var dayOneDiv = document.querySelector("#day-one")
 var dayTwoDiv = document.querySelector("#day-two")
@@ -16,9 +17,14 @@ var dayFiveDiv = document.querySelector("#day-five")
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
 document.querySelector("#searchBtn").addEventListener("click", function () {
     var cityInput = document.querySelector("#cityInput").value;
+    var searchInput = document.getElementById('cityInput');
+    var searchValue = searchInput.value;
+
     if (cityInput === "") {
         alert("Please Enter a valid city name")
         return;
+    } else {
+    cityHistory = localStorage.setItem("cityInput", searchValue)    
     }
     callFetch(cityInput);
 
@@ -29,59 +35,24 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 })
 
 
-function saveCity() {
-    var searchInput = document.getElementById('cityInput');
-    var searchValue = searchInput.value;
-    lcoalStorage.setItem("cityInput", searchValue)
-}
+
 
 
 //call displayHistory on load 
-window.onload = function() {
-    var searchInput = document.getElementById('cityInput');
-    var savedSearchValue = localStorage.getItem('searchValue');
-    if (savedSearchValue) {
-        searchInput.value = savedSearchValue
+window.onload = displayHistory()
+
+function displayHistory (searchValue) {
+    localStorage.getItem("searchValue", JSON.stringify(searchValue))
+    var historyContainer = document.querySelector('#searchHistory')
+        if (searchHistory.length > 0) {
+            searchHistory.forEach(searchValue => {
+                var aButton = document.createElement('button');
+                aButton.textContent = searchValue;
+                historyContainer.appendChild(aButton)
+            })
+        }
     }
- /*    displayHistory();
-    localStorage.getItem("searchHistory", JSON.stringify(searchHistory)); */
-}
-
-
-
-console.log(searchTerm)
-
-
-
-//defines variables necessary for search history display/functionality 
-/* var searchButton = document.querySelector("#searchBtn")
-var searchInput = document.querySelector("#cityInput")
-var searchTerm = document.getElementById("cityInput").value; */
-
-
-//loops through searchHistory arr selects historyButtons element, adds event listener on historyButton click to callFetch and push values to element 
-for (i = 0; i < searchHistory.length; i++) {
-    document.getElementById(`historyButtons${i}`).addEventListener('click', function() {
-        callFetch(searchHistory.push(searchTerm))
-    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     
-    displayHistory();
-})
-}
-
-//function to display search history
-function displayHistory() {
-    var historyButtons = '';
-    for (i = 0; i < searchHistory.length; i++) {
-        historyButtons += `<button id="historyButton${i}" class="historyButton">${searchHistory[i]}</button>`;
-    }
-    document.getElementById("searchHistory").innerHTML = historyButtons; 
-    localStorage.getItem("searchHistory", JSON.stringify(searchHistory));
-    
-    
-}
-
-displayHistory();
 
 console.log('searchHistory:', searchHistory);
 
@@ -215,6 +186,7 @@ function displayCurrent() {
     var currentContainer = document.getElementById("current-container");
     currentContainer.classList.add("displayed")
 } 
+
 
 
   
