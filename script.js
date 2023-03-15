@@ -25,9 +25,15 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
         return;
     }
     
+    searchHistory = JSON.parse(localStorage.getItem("searchHistory")) 
+    
+    if (!Array.isArray(searchHistory)) {
+        searchHistory = []
+    }
+
     searchHistory.push(searchValue)
     
-    localStorage.setItem("searchHistory", JSON.stringify("searchValue")) ;
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) ;
 
     callFetch(cityInput);
 
@@ -37,14 +43,10 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
 })
 
-    
-
-
-
 
 
 //call displayHistory on load 
-window.onload = displayHistory();
+window.onload = displayHistory()
 
 function displayHistory (searchValue) {
     localStorage.getItem("searchHistory", JSON.stringify(searchValue))
