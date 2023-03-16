@@ -153,12 +153,21 @@ function callFetch(city) {
             //concatenate values of each data variable
             
             for (i = 0; i < 5; i++) {
-                var dayDiv = document.querySelector("card-container");
+                var dayDiv = document.createElement("div");
+                dayDiv.classList.add('col', 's12','m6', '12');
+                
+                var dayDate = newDates[i];
+                var dayTemp = temp[i];
+                var dayHumidity = fiveDayHumidity[i];
+                var dayWind = fiveDayWind[i]
+
+                //add content 
                 dayDiv.innerHTML = `
-                <p>${newDates[i]}</p>
-                <p>Temp: ${temp[i]} °F</p>
-                <p>Humidity: ${fiveDayHumidity[i]} %</p>
-                <p>Wind-speed: ${fiveDayWind[i]} mph</p>`
+                <p>${dayDate}</p>
+                <p>Temp: ${dayTemp} °F</p>
+                <p>Humidity: ${dayHumidity} %</p>
+                <p>Wind-speed: ${dayWind} mph</p>`
+                
             }
 
             //append new div element to corresponding day div 
@@ -260,7 +269,7 @@ function createCard(data) {
 
 //functions so css properties don't show up until the search button is pressed 
 function displayDays() {
-    var container = document.getElementById("day-container");
+    var container = document.getElementById("card-container");
     container.classList.add("displayed")
 }
 function displayCurrent() {
