@@ -35,8 +35,30 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
 
     //save to localstorage 
     localStorage.setItem('city', JSON.stringify(searchHistory))
-    //callback functions 
-},
+    displayHistory();
+});
+
+//create buttons based on search history via js 
+var createHistoryEl = document.getElementById(cityHistory);
+function displayHistory() {
+    createHistoryEl.empty();
+
+for (let i = 0; i < searchHistory.length; i++) {
+    var rowElement = $('<row>');
+    var buttonElement = $('<button').text('${searchHist[i]}')
+
+    buttonElement.attr('type', 'button');
+    buttonElement.addClass('btn btn-outline-secondary historyButton')
+    rowElement.addClass('historyButtonRow');
+
+    createHistoryEl.prepend(rowElement);
+    rowElement.append(buttonElement);
+
+} if (!city) {
+    return;
+}
+
+};
     
    /*  var searchHistory = JSON.parse(localStorage.getItem("searchHistory"))  */
     
@@ -44,7 +66,7 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
         searchHistory = []
     } */
 
-    searchHistory.push(searchValue),
+   /*  searchHistory.push(searchValue),
     
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) ;
 
@@ -55,8 +77,6 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
     displayDays()
 
 })
-
-
 
 //call displayHistory on load 
 window.onload = displayHistory()
@@ -73,7 +93,12 @@ function displayHistory (searchValue) {
         }
     }
     
+ */
 
+
+
+
+    
 console.log('searchHistory:', searchHistory);
 
 
