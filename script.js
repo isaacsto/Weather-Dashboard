@@ -10,12 +10,6 @@ const currentDate = new Date();
 const dateString = currentDate.toDateString();
 console.log(dateString);
 
-/* // defines days divs globally for fetch to circumvent dev tools error that showed up
-var dayOneDiv = document.querySelector("#day-one")
-var dayTwoDiv = document.querySelector("#day-two")
-var dayThreeDiv = document.querySelector("#day-three")
-var dayFourDiv = document.querySelector("#day-four")
-var dayFiveDiv = document.querySelector("#day-five") */
 
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
 document.querySelector("#searchBtn").addEventListener("click", function () {
@@ -36,6 +30,7 @@ document.querySelector("#searchBtn").addEventListener("click", function () {
     //save to localstorage 
     localStorage.setItem('city', JSON.stringify(searchHistory))
     displayHistory();
+    getTodayWeath();
 });
 
 //create buttons based on search history via js 
@@ -58,53 +53,48 @@ for (let i = 0; i < searchHistory.length; i++) {
     return;
 }
 
+
 };
-    
-   /*  var searchHistory = JSON.parse(localStorage.getItem("searchHistory"))  */
-    
-/*     if (!Array.isArray(searchHistory)) {
-        searchHistory = []
-    } */
-
-   /*  searchHistory.push(searchValue),
-    
-    localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) ;
-
-    callFetch(cityInput);
-
-    //css display functions 
-    displayCurrent()
-    displayDays()
-
-})
-
-//call displayHistory on load 
-window.onload = displayHistory()
-
-function displayHistory (searchValue) {
-    localStorage.getItem("searchHistory", JSON.stringify(searchValue))
-    var historyContainer = document.querySelector('#searchHistory')
-        if (searchHistory.length > 0) {
-            searchHistory.forEach(searchValue => {
-                var aButton = document.createElement('button');
-                aButton.textContent = searchValue;
-                historyContainer.appendChild(aButton)
-            })
-        }
-    }
-    
- */
 
 
+//create today card 
+var todayCard = $('.cardBody')
 
 
-    
-console.log('searchHistory:', searchHistory);
+function getTodayWeath(){
+    var currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
+
+    $(todayCard).empty();
+
+    fetch(currentWeatherUrl)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      $('.cardTodayCityName').text(data.name);
+      $('.todayCard').text(date);
+      $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+      var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
+      cardTodayBody.append(pEl);
+      var pElTemp = $('<p>').text(`Feels Like: ${data.main.feels_like} °F`);
+      cardTodayBody.append(pElTemp);
+      var pElHumid = $('<p>').text(`Humidity: ${data.main.humidity} %`);
+      cardTodayBody.append(pElHumid);
+      var pElWind = $('<p>').text(`Wind Speed: ${data.wind.speed} MPH`);
+      cardTodayBody.append(pElWind);
+
+      var cityLong = data.coord.lon;
+      var cityLat = data.coord.lat;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+}
 
 
 //passes city as argument function that hold both current and 5 day forecast fetches 
 function callFetch(city) {
-
     //gets date for display
     var currentDate = new Date();
     var month = currentDate.getMonth() + 1;
@@ -123,12 +113,9 @@ function callFetch(city) {
             weatherInfoDiv.innerHTML = `<h2 class="weather-head">${data.name} ${fullDate}</h2><br> <p class="dat">Temperature: ${data.main.temp} °F</p><br> <p class="dat">Wind Speed: ${data.wind.speed} mph</p><br> <p class="dat">Humidity: ${data.main.humidity}% </p>`
 
             //Add city to search history when search button is clicked
-
-
         })
 
     
-
     var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${APIKey}`
 
     //fetches 5 day forecast`
@@ -314,4 +301,39 @@ function displayCurrent() {
     var currentContainer = document.getElementById("current-container");
     currentContainer.classList.add("displayed")
 } 
+
+   /*  var searchHistory = JSON.parse(localStorage.getItem("searchHistory"))  */
+    
+/*     if (!Array.isArray(searchHistory)) {
+        searchHistory = []
+    } */
+
+   /*  searchHistory.push(searchValue),
+    
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) ;
+
+    callFetch(cityInput);
+
+    //css display functions 
+    displayCurrent()
+    displayDays()
+
+})
+
+//call displayHistory on load 
+window.onload = displayHistory()
+
+function displayHistory (searchValue) {
+    localStorage.getItem("searchHistory", JSON.stringify(searchValue))
+    var historyContainer = document.querySelector('#searchHistory')
+        if (searchHistory.length > 0) {
+            searchHistory.forEach(searchValue => {
+                var aButton = document.createElement('button');
+                aButton.textContent = searchValue;
+                historyContainer.appendChild(aButton)
+            })
+        }
+    }
+    
+ */
 
