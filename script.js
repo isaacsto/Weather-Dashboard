@@ -277,9 +277,3 @@ function displayCurrent() {
     currentContainer.classList.add("displayed")
 } 
 
-
-
-  
-
-
-  
