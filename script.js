@@ -13,7 +13,7 @@ console.log(dateString);
 
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
 document.querySelector("#searchBtn").addEventListener("click", function () {
-    event.preventDefault();
+    e.preventDefault();
 
     var cityInput = document.getElementById("#cityInput").value;
     /* var searchInput = document.getElementById('cityInput'); */
@@ -71,7 +71,7 @@ function getTodayWeath(){
       return response.json();
     })
     .then(function(data) {
-      $('.cardTodayCityName').text(data.name);
+      $('.todayCityName').text(data.name);
       $('.todayCard').text(date);
       $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
       var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
@@ -90,7 +90,7 @@ function getTodayWeath(){
       console.log(error);
     });
 
-}
+};
 
 
 //passes city as argument function that hold both current and 5 day forecast fetches 
@@ -209,52 +209,6 @@ function callFetch(city) {
                 dayFiveDiv.appendChild(dayDiv)
             }
             
-        
-
-
-     /*        var tempHumidWind1 = `${newDates[0]}<br>
-            <br>Temp: ${temp[0]} °F<br>
-            <br>Humidity: ${fiveDayHumidity[0]} %<br>
-            <br>Wind-speed: ${fiveDayWind[0]} mph`
-            var dayOneEl = document.createElement("p")
-            dayOneEl.innerHTML = tempHumidWind1;
-            dayOneDiv.appendChild(dayOneEl);
-
-            
-            var tempHumidWind2 = `${newDates[1]} <br>
-            <br>Temp: ${temp[1]} °F<br>
-            <br>Humidity: ${fiveDayHumidity[1]} %<br>
-            <br>Wind-speed:  ${fiveDayWind[1]} mph`
-            var dayTwoEl = document.createElement("p")
-            dayTwoEl.innerHTML = tempHumidWind2;
-            dayTwoDiv.appendChild(dayTwoEl);
-
-            
-            var tempHumidWind3 = `${newDates[2]} <br>
-            <br>Temp: ${temp[2]} °F<br>
-            <br>Humidity:${fiveDayHumidity[2]} %<br>
-            <br>Wind-speed: ${fiveDayWind[2]} mph`
-            var dayThreeEl = document.createElement("p")
-            dayThreeEl.innerHTML = tempHumidWind3;
-            dayThreeDiv.appendChild(dayThreeEl);
-            
-            
-            var tempHumidWind4 = `${newDates[3]} <br>
-            <br>Temp: ${temp[3]} °F<br>
-            <br>Humidity: ${fiveDayHumidity[3]} %<br>
-            <br>Wind-speed: ${fiveDayWind[3]} mph`
-            var dayFourEl = document.createElement("p")
-            dayFourEl.innerHTML = tempHumidWind4;
-            dayFourDiv.appendChild(dayFourEl);
-
-            
-            var tempHumidWind5 = `${newDates[4]} <br>
-            <br>Temp: ${temp[4]}  °F<br>
-            <br>Humidity:${fiveDayHumidity[4]} %<br>
-            <br>Wind-speed: ${fiveDayWind[4]} mph`
-            var dayFiveEl = document.createElement("p")
-            dayFiveEl.innerHTML = tempHumidWind5;
-            dayFiveDiv.appendChild(dayFiveEl); */
         })
         .catch(error => {
             console.error("An error occured while fetching the data:", error);
