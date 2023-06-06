@@ -3,35 +3,48 @@
 //APIKey/initialize arrays
 var APIKey = "e87ec7f203ff2e1f695f40b6fe50b1e1";
 var searchHistory = [];
-var city = []
+var city = "Miami"
 
+//get date
+const currentDate = new Date();
+const dateString = currentDate.toDateString();
+console.log(dateString);
 
-
-// defines days divs globally for fetch to circumvent dev tools error that showed up
+/* // defines days divs globally for fetch to circumvent dev tools error that showed up
 var dayOneDiv = document.querySelector("#day-one")
 var dayTwoDiv = document.querySelector("#day-two")
 var dayThreeDiv = document.querySelector("#day-three")
 var dayFourDiv = document.querySelector("#day-four")
-var dayFiveDiv = document.querySelector("#day-five")
+var dayFiveDiv = document.querySelector("#day-five") */
 
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
 document.querySelector("#searchBtn").addEventListener("click", function () {
-    var cityInput = document.querySelector("#cityInput").value;
-    var searchInput = document.getElementById('cityInput');
-    var searchValue = searchInput.value;
+    event.preventDefault();
+
+    var cityInput = document.getElementById("#cityInput").value;
+    /* var searchInput = document.getElementById('cityInput'); */
+   /*  var searchValue = searchInput.value; */
 
     if (cityInput === "") {
         alert("Please Enter a valid city name")
         return;
     }
-    
-    searchHistory = JSON.parse(localStorage.getItem("searchHistory")) 
-    
-    if (!Array.isArray(searchHistory)) {
-        searchHistory = []
-    }
 
-    searchHistory.push(searchValue)
+    //push city value to cityInput el
+    cityInput.push(city);
+
+    //save to localstorage 
+    localStorage.setItem('city', JSON.stringify(searchHistory))
+    //callback functions 
+},
+    
+   /*  var searchHistory = JSON.parse(localStorage.getItem("searchHistory"))  */
+    
+/*     if (!Array.isArray(searchHistory)) {
+        searchHistory = []
+    } */
+
+    searchHistory.push(searchValue),
     
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory)) ;
 
