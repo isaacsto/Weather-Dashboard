@@ -43,7 +43,9 @@ h1 {
     border: 2px solid #2E5E4E
 }
 
-/* #2E5E4E
-#DBD3D8
-#93A7AA
-#A7B5B9 */
+ img {
+    width:  70px;
+    height: 70px;
+} 
+
+

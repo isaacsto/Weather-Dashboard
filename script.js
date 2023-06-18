@@ -12,7 +12,7 @@ console.log(dateString);
 
 
 //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
-document.getElementById("searchBtn").addEventListener("click", function () {
+document.getElementById("searchBtn").addEventListener("click", function (event) {
     event.preventDefault();
 
     var cityInput = document.getElementById("cityInput").value;
@@ -29,7 +29,8 @@ document.getElementById("searchBtn").addEventListener("click", function () {
    console.log(searchHistory)
 
     //save to localstorage 
-    localStorage.setItem('city', JSON.stringify(searchHistory))
+    localStorage.setItem('city', JSON.stringify(searchHistory));
+
     displayHistory();
     getTodayWeath();
 });
@@ -37,12 +38,12 @@ document.getElementById("searchBtn").addEventListener("click", function () {
 //create buttons based on search history via js 
 var createHistoryEl = document.createElement("div");
 
-function displayHistory() {
-    event.preventDefault();
+function displayHistory(event) {
+   /* event.preventDefault(); */
 
 for (let i = 0; i < searchHistory.length; i++) {
     var rowElement = $('<row>');
-    var buttonElement = $('<button').text('${searchHistory[i]}')
+    var buttonElement = $('<button>').text('${searchHistory[i]}')
 
     buttonElement.attr('type', 'button');
     buttonElement.addClass('btn btn-outline-secondary historyButton')
@@ -60,30 +61,33 @@ for (let i = 0; i < searchHistory.length; i++) {
 
 
 //create today card 
-var todayCard = $('.cardBody')
+var todayBody = $('.todayBody')
 
 
 function getTodayWeath(){
     var currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
 
-    $(todayCard).empty();
+    $(todayBody).empty();
 
     fetch(currentWeatherUrl)
     .then(function(response) {
+   
       return response.json();
     })
     .then(function(data) {
+      console.log(data)
       $('.todayCityName').text(data.name);
       $('.todayCard').text(currentDate);
       $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+
       var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
-      todayCard.append(pEl);
+      todayBody.append(pEl);
       var pElTemp = $('<p>').text(`Feels Like: ${data.main.feels_like} °F`);
-      todayCard.append(pElTemp);
+      todayBody.append(pElTemp);
       var pElHumid = $('<p>').text(`Humidity: ${data.main.humidity} %`);
-      todayCard.append(pElHumid);
+      todayBody.append(pElHumid);
       var pElWind = $('<p>').text(`Wind Speed: ${data.wind.speed} MPH`);
-      todayCard.append(pElWind);
+      todayBody.append(pElWind);
 
       var cityLong = data.coord.lon;
       var cityLat = data.coord.lat;
@@ -99,7 +103,9 @@ function getTodayWeath(){
 
 var putFiveDayForeCast = $('.fiveDayForeCast')   
 
-var fiveDayForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${APIKey}`
+/* var fiveDayForecast = `http://api.openweathermap.org/data/2.5/forecast?${city}=524901&appid=${APIKey}` */
+
+var fiveDayForecast = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
 
 function getFiveDayForecast () {
     fetch(fiveDayForecast)
