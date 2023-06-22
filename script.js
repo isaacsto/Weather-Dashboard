@@ -1,9 +1,10 @@
 //coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys
 
 //APIKey/initialize arrays
-var APIKey = "e87ec7f203ff2e1f695f40b6fe50b1e1";
+var APIKey = "d1cb29ff12063ca4c92fd18316bf0c50";
 var searchHistory = [];
 var city = "";
+var citySearch = "";
 
 //get date
 const currentDate = new Date();
@@ -15,14 +16,16 @@ console.log(dateString);
 document.getElementById("searchBtn").addEventListener("click", function (event) {
     event.preventDefault();
 
-    city = document.getElementById("cityInput").value;
+   /*  city = document.getElementById("cityInput").value; */
     var searchInput = document.getElementById('cityInput');
     var searchValue = searchInput.value;
 
-    if (cityInput === "") {
+    if (searchValue === "") {
         alert("Please Enter a valid city name")
         return;
     }
+
+  city = searchValue;
 
     //push city value to cityInput el
    searchHistory.push(city);
@@ -31,30 +34,43 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
     //save to localstorage 
     localStorage.setItem('city', JSON.stringify(searchHistory));
 
+
+
+/* button.addEventListener("click", function () {
+  citySearch(city);
+}); */
+
     displayHistory();
-    getTodayWeath();
+    getTodayWeather();
 });
 
+function citySearch(cityInput) {
+  city = cityInput;
+  getTodayWeather(); 
+}
 
 
 function displayHistory() {
   
   var histButton = document.getElementById('historyButton');
-  histButton.innerHTML = city;
+  histButton.innerHTML = "";
+
+  searchHistory.forEach(function (city) {
+    var button = document.createElement("button");
+    button.textContent = city;
+    button.addEventListener("click", function () {
+      citySearch(city);
+    });
+    histButton.appendChild(button)
+  })
   
-}
-
-var histButton = document.getElementById('historyButton');
-histButton.addEventListener('click', displayHistory);
-
-//create today card 
+};
 
 
-
-function getTodayWeath(){
+function getTodayWeather(){
     var currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(city) + "&units=imperial&appid=" + APIKey;
 
-    $('.todayBody').empty();
+    var todayBody = $('.todayBody').empty();
 
     fetch(currentWeatherUrl)
     .then(function(response) {
@@ -91,7 +107,7 @@ function getTodayWeath(){
 
 
 
-/* function onLoad() {
+function onLoad() {
 
 	var cityHist = JSON.parse(localStorage.getItem('city'));
 
@@ -99,8 +115,8 @@ function getTodayWeath(){
 		searchHistory = cityHist
 	}
 	displayHistory();
-	getTodayWeath();
+	getTodayWeather();
 };
 
 onLoad();
- */
+ 
