@@ -34,21 +34,9 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
     //save to localstorage 
     localStorage.setItem('city', JSON.stringify(searchHistory));
 
-
-
-/* button.addEventListener("click", function () {
-  citySearch(city);
-}); */
-
     displayHistory();
     getTodayWeather();
 });
-
-function citySearch(cityInput) {
-  city = cityInput;
-  getTodayWeather(); 
-}
-
 
 function displayHistory() {
   
@@ -109,14 +97,10 @@ function getTodayWeather(){
 
 function onLoad() {
 
-	var cityHist = JSON.parse(localStorage.getItem('city'));
 
-	if (cityHist !== null) {
-		searchHistory = cityHist
-	}
 	displayHistory();
-	getTodayWeather();
+
 };
 
 onLoad();
- 
+
