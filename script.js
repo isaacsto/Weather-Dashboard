@@ -16,8 +16,8 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
     event.preventDefault();
 
     city = document.getElementById("cityInput").value;
-    /* var searchInput = document.getElementById('cityInput'); */
-   /*  var searchValue = searchInput.value; */
+    var searchInput = document.getElementById('cityInput');
+    var searchValue = searchInput.value;
 
     if (cityInput === "") {
         alert("Please Enter a valid city name")
@@ -35,39 +35,26 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
     getTodayWeath();
 });
 
-//create buttons based on search history via js 
-var createHistoryEl = document.createElement("div");
 
-function displayHistory(event) {
-   /* event.preventDefault(); */
 
-for (let i = 0; i < searchHistory.length; i++) {
-    var rowElement = $('<row>');
-    var buttonElement = $('<button>').text('${searchHistory[i]}')
-
-    buttonElement.attr('type', 'button');
-    buttonElement.addClass('btn btn-outline-secondary historyButton')
-    rowElement.addClass('historyButtonRow');
-
-    createHistoryEl.prepend(rowElement);
-    rowElement.append(buttonElement);
-
-} if (!city) {
-    return;
+function displayHistory() {
+  
+  var histButton = document.getElementById('historyButton');
+  histButton.innerHTML = city;
+  
 }
 
-
-};
-
+var histButton = document.getElementById('historyButton');
+histButton.addEventListener('click', displayHistory);
 
 //create today card 
-var todayBody = $('.todayBody')
+
 
 
 function getTodayWeath(){
     var currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
 
-    $(todayBody).empty();
+    $('.todayBody').empty();
 
     fetch(currentWeatherUrl)
     .then(function(response) {
@@ -76,9 +63,10 @@ function getTodayWeath(){
     })
     .then(function(data) {
       console.log(data)
+
       $('.todayCityName').text(data.name);
       $('.todayCard').text(currentDate);
-      $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+      $('.icons').attr('src', `https://openweathermap.org/im››g/wn/${data.weather[0].icon}@2x.png`);
 
       
       var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
