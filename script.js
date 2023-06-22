@@ -3,7 +3,7 @@
 //APIKey/initialize arrays
 var APIKey = "e87ec7f203ff2e1f695f40b6fe50b1e1";
 var searchHistory = [];
-var city = "Miami"
+var city = "";
 
 //get date
 const currentDate = new Date();
@@ -15,7 +15,7 @@ console.log(dateString);
 document.getElementById("searchBtn").addEventListener("click", function (event) {
     event.preventDefault();
 
-    var cityInput = document.getElementById("cityInput").value;
+    city = document.getElementById("cityInput").value;
     /* var searchInput = document.getElementById('cityInput'); */
    /*  var searchValue = searchInput.value; */
 
@@ -25,7 +25,7 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
     }
 
     //push city value to cityInput el
-   searchHistory.push(cityInput);
+   searchHistory.push(city);
    console.log(searchHistory)
 
     //save to localstorage 
@@ -80,6 +80,7 @@ function getTodayWeath(){
       $('.todayCard').text(currentDate);
       $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
 
+      
       var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
       todayBody.append(pEl);
       var pElTemp = $('<p>').text(`Feels Like: ${data.main.feels_like} °F`);
@@ -103,7 +104,6 @@ function getTodayWeath(){
 
 var putFiveDayForeCast = $('.fiveDayForeCast')   
 
-/* var fiveDayForecast = `http://api.openweathermap.org/data/2.5/forecast?${city}=524901&appid=${APIKey}` */
 
 var fiveDayForecast = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKey;
 
@@ -129,10 +129,14 @@ function getFiveDayForecast () {
               if (value.dt_txt.split(' ')[1] === '12:00:00') {
                 myWeather.push(testObj);
               }
-            });
-      
-            var fiveForecastEl = $('.fiveForecast'); // Assuming you have an element with the class 'fiveForecast' to append the cards
-      
+            }); 
+
+            for (var i = 0; i < 5; i++) {
+              var forecast = data.list[i]
+            }
+       
+            var fiveForecastEl = $('.row fiveForecast'); 
+
             myWeather.forEach(function(weather) {
               var divElCard = $('<div>');
               divElCard.attr('class', 'card text-white bg-primary mb-3 cardOne');
