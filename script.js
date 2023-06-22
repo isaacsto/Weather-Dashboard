@@ -82,7 +82,7 @@ function getTodayWeather(){
 
       $('.todayCityName').text(data.name);
       $('.todayCard').text(currentDate);
-      $('.icons').attr('src', `https://openweathermap.org/im››g/wn/${data.weather[0].icon}@2x.png`);
+      $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
 
       
       var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
