@@ -82,8 +82,7 @@ function getTodayWeather(){
       var pElWind = $('<p>').text(`Wind Speed: ${data.wind.speed} MPH`);
       todayBody.append(pElWind);
 
-      var cityLong = data.coord.lon;
-      var cityLat = data.coord.lat;
+
     })
     .catch(function(error) {
       console.log(error);
@@ -92,6 +91,70 @@ function getTodayWeather(){
 
 };
 
+/* function getFiveDayForecast() {
+  var fiveDayWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(city) + "&units=imperial&appid=" + APIKey;
+
+  fetch(fiveDayWeatherUrl)
+  .then(function(response) {
+    return response.json 
+  }
+  )
+  .then(function(data){
+      // Extract the forecast for the next five days
+      $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+
+      var forecasts = data.list.slice(1, 6);
+
+  
+      var forecastContainer = document.createElement("div");
+      forecasts.forEach(function(forecastContainer) {
+
+        var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
+        todayBody.append(pEl);
+        var pElTemp = $('<p>').text(`Feels Like: ${data.main.feels_like} °F`);
+        todayBody.append(pElTemp);
+        var pElHumid = $('<p>').text(`Humidity: ${data.main.humidity} %`);
+        todayBody.append(pElHumid);
+        var pElWind = $('<p>').text(`Wind Speed: ${data.wind.speed} MPH`);
+        todayBody.append(pElWind);
+      });
+    });
+}
+ */
+
+function getFiveDayForecast() {
+  var fiveDayWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(city) + "&units=imperial&appid=" + APIKey;
+
+  fetch(fiveDayWeatherUrl)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      displayFiveDayForecast(data);
+    });
+}
+
+function displayFiveDayForecast(data) {
+  
+  $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+
+  var forecasts = data.list.slice(1, 6);
+
+  var forecastContainer = document.createElement("div");
+  forecasts.forEach(function(forecast) {
+    var pEl = $('<p>').text(`Temperature: ${forecast.main.temp} °F`);
+    forecastContainer.append(pEl);
+    var pElTemp = $('<p>').text(`Feels Like: ${forecast.main.feels_like} °F`);
+    forecastContainer.append(pElTemp);
+    var pElHumid = $('<p>').text(`Humidity: ${forecast.main.humidity} %`);
+    forecastContainer.append(pElHumid);
+    var pElWind = $('<p>').text(`Wind Speed: ${forecast.wind.speed} MPH`);
+    forecastContainer.append(pElWind);
+  });
+
+  var forecastWrapper = document.getElementById("forecast-wrapper");
+  forecastWrapper.appendChild(forecastContainer);
+}
 
 
 
