@@ -54,7 +54,8 @@ function displayHistory() {
     var button = document.createElement("button");
     button.textContent = city;
     button.addEventListener("click", function () {
-      citySearch(city);
+      getTodayWeather(city);
+      getFiveDayForecast(city);
     });
     histButton.appendChild(button)
   })
