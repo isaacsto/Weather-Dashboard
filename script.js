@@ -143,28 +143,32 @@ function displayFiveDayForecast(data) {
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
 
-    var iconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
+    var temp = forecast.main.temp;
+    var feelsLike = forecast.main.feels_like;
+    var humidity = forecast.main.humidity;
+    var windSpeed = forecast.wind.speed;
+    var icon = forecast.weather[0].icon
 
-
-    var fiveDayImg = document.createElement("img");
-    fiveDayImg.src = iconUrl;
-    forecastContainer.appendChild(fiveDayImg)
-
-    var pEl = document.createElement("p");
-    pEl.textContent = `Temperature: ${forecast.main.temp} °F`;
-    forecastContainer.appendChild(pEl);
+    var imgEl = document.createElement("img");
+    imgEl.src = `https://openweathermap.org/img/wn/${icon}.png`;
+    forecastContainer.appendChild(imgEl);
 
     var pElTemp = document.createElement("p");
-    pElTemp.textContent = `Feels Like: ${forecast.main.feels_like} °F`;
+    pElTemp.textContent = `Temperature: ${temperature} °F`;
     forecastContainer.appendChild(pElTemp);
 
+    var pElFeelsLike = document.createElement("p");
+    pElFeelsLike.textContent = `Feels Like: ${feelsLike} °F`;
+    forecastContainer.appendChild(pElFeelsLike);
+
     var pElHumid = document.createElement("p");
-    pElHumid.textContent = `Humidity: ${forecast.main.humidity} %`;
+    pElHumid.textContent = `Humidity: ${humidity} %`;
     forecastContainer.appendChild(pElHumid);
 
     var pElWind = document.createElement("p");
-    pElWind.textContent = `Wind Speed: ${forecast.wind.speed} MPH`;
+    pElWind.textContent = `Wind Speed: ${windSpeed} MPH`;
     forecastContainer.appendChild(pElWind);
+    
   });
 
  var forecastWrapper = document.getElementById("forecast-wrapper");
