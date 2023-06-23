@@ -138,12 +138,18 @@ function getFiveDayForecast() {
 
 function displayFiveDayForecast(data) {
 
-  var forecasts = data.list.slice(1, 6);
+  console.log(data);
+/* 
+  var forecasts = data.list;
 
+  var fiveDay = forecasts.slice(1, 5) */
+
+  var forecasts = data.list.slice(1, 6);
+  
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
 
-    var temp = forecast.main.temp;
+    var temperature = forecast.main.temp;
     var feelsLike = forecast.main.feels_like;
     var humidity = forecast.main.humidity;
     var windSpeed = forecast.wind.speed;
@@ -168,7 +174,7 @@ function displayFiveDayForecast(data) {
     var pElWind = document.createElement("p");
     pElWind.textContent = `Wind Speed: ${windSpeed} MPH`;
     forecastContainer.appendChild(pElWind);
-    
+
   });
 
  var forecastWrapper = document.getElementById("forecast-wrapper");
