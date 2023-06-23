@@ -41,7 +41,7 @@ function searchingCity() {
     //save to localstorage 
     localStorage.setItem('city', JSON.stringify(searchHistory));
 
-    displayHistory();
+    /* displayHistory(); */
     getTodayWeather();
     getFiveDayForecast();
   
@@ -54,10 +54,10 @@ function clearHistory() {
  
   localStorage.setItem('city', JSON.stringify(searchHistory));
 
-  displayHistory(); 
+ /*  displayHistory();  */
 }
 
-function displayHistory() {
+/* function displayHistory() {
   
   var histButton = document.getElementById('historyButtonCont');
   histButton.innerHTML = "";
@@ -76,7 +76,7 @@ function displayHistory() {
 
 
 
-};
+}; */
 
 
 function getTodayWeather(){
