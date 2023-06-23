@@ -23,7 +23,6 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
 
 function searchingCity() {
   
-
     city = document.getElementById("cityInput").value; 
     var searchInput = document.getElementById('cityInput');
     var searchValue = searchInput.value;
@@ -61,18 +60,23 @@ function clearHistory() {
 
 function displayHistory() {
   
-  var histButton = document.getElementById('historyButton');
+  var histButton = document.createElement('div');
   histButton.innerHTML = "";
+
+  var storedSearchHistory = JSON.parse(localStorage.getItem('city')) || [];
+  searchHistory = storedSearchHistory;
+
 
   searchHistory.forEach(function (city) {
     var button = document.createElement("button");
     button.textContent = city;
     button.addEventListener("click", function () {
       searchingCity(city);
-      clearHistory();
+      clearHistory(); 
     });
     histButton.appendChild(button)
   })
+
   
 };
 
@@ -95,16 +99,18 @@ function getTodayWeather(){
       $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
 
       
-      var pEl = $('<p>').text(`Temperature: ${data.main.temp} °F`);
-      todayBody.append(pEl);
-      var pElTemp = $('<p>').text(`Feels Like: ${data.main.feels_like} °F`);
-      todayBody.append(pElTemp);
-      var pElHumid = $('<p>').text(`Humidity: ${data.main.humidity} %`);
-      todayBody.append(pElHumid);
-      var pElWind = $('<p>').text(`Wind Speed: ${data.wind.speed} MPH`);
-      todayBody.append(pElWind);
+      var weatherContainer = $('<div>').addClass('weatherContainer');
 
+      var pEl = $('<p>').addClass('weatherDetail').text(`Temperature: ${data.main.temp} °F`);
+      weatherContainer.append(pEl);
+      var pElTemp = $('<p>').addClass('weatherDetail').text(`Feels Like: ${data.main.feels_like} °F`);
+      weatherContainer.append(pElTemp);
+      var pElHumid = $('<p>').addClass('weatherDetail').text(`Humidity: ${data.main.humidity} %`);
+      weatherContainer.append(pElHumid);
+      var pElWind = $('<p>').addClass('weatherDetail').text(`Wind Speed: ${data.wind.speed} MPH`);
+      weatherContainer.append(pElWind);
 
+      todayBody.append(weatherContainer);
     })
     .catch(function(error) {
       console.log(error);
@@ -130,15 +136,12 @@ function displayFiveDayForecast(data) {
 
   console.log(data);
 
-/*   var fiveDay = data;
-
-  var forecasts = fiveDay.slice(1, 5); */
-
 var forecasts = data.list.slice(1, 6); 
   
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
 
+    var date = new Date(forecast.dt_txt); 
     var temperature = forecast.main.temp;
     var feelsLike = forecast.main.feels_like;
     var humidity = forecast.main.humidity;
@@ -148,6 +151,10 @@ var forecasts = data.list.slice(1, 6);
     var imgEl = document.createElement("img");
     imgEl.src = `https://openweathermap.org/img/wn/${icon}.png`;
     forecastContainer.appendChild(imgEl);
+
+    var pElDate = document.createElement("p");
+    pElDate.textContent = `Date: ${date.toLocaleDateString()}`; 
+    forecastContainer.appendChild(pElDate);
 
     var pElTemp = document.createElement("p");
     pElTemp.textContent = `Temperature: ${temperature} °F`;
@@ -173,12 +180,12 @@ var forecasts = data.list.slice(1, 6);
 
 
 
-function onLoad() {
+/* function onLoad() {
 
 
 	displayHistory();
 
 };
 
-onLoad();
+onLoad(); */
 

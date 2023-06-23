@@ -1,51 +1,27 @@
-h1 {
-   background-color:#2E5E4E;
-   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-   color: #DBD3D8;  
 
-}
-
-.search {
+* {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin-bottom: 10px;
 }
 
-.weather-head {
-    margin-bottom: 2px;
-}
-.dat {
-    margin-bottom: 5px;
-}
-
-#current-container {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
-}
-
-#day-container {
-    display: flex;
-}
-.displayed .day {
-    flex: 1;
-    flex-direction: row;
-    background-color: #A7B5B9;
-    border: 2px solid #2E5E4E;
-    max-width: 250px;
-    max-height: fit-content;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: smaller;
-    margin-inline: 20px;
-    
-
-}
-
-.displayed .current {
-    border: 2px solid #2E5E4E
-}
-
- img {
+img {
     width:  70px;
     height: 70px;
 } 
+
+.weatherContainer {
+    width: 500px; 
+  }
+  
+  .weatherDetail {
+    width: 100%;
+  }
+  
+.wrap {
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-start;
+    justify-content: flex-start;
+}
 
 
