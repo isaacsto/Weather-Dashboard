@@ -83,6 +83,9 @@ function getTodayWeather(){
     var currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(city) + "&units=imperial&appid=" + APIKey;
 
     var todayBody = $('.todayBody').empty();
+    var todayRow = $('.today-row');
+
+    todayRow.hide();
 
     fetch(currentWeatherUrl)
     .then(function(response) {
@@ -109,6 +112,8 @@ function getTodayWeather(){
       weatherContainer.append(pElWind);
 
       todayBody.append(weatherContainer);
+
+      todayRow.show();
     })
     .catch(function(error) {
       console.log(error);

@@ -13,6 +13,10 @@ img {
     height: 70px;
 } 
 
+.today-row {
+    display: none; 
+}
+
 .todayBody {
     margin-left: 10px; 
 }
