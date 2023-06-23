@@ -36,6 +36,8 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
 
     displayHistory();
     getTodayWeather();
+    getFiveDayForecast();
+    displayFiveDayForecast();
 });
 
 function displayHistory() {
@@ -129,9 +131,9 @@ function getFiveDayForecast() {
     .then(function(response) {
       return response.json();
     })
-    .then(function(data) {
+  /*   .then(function(data) {
       displayFiveDayForecast(data);
-    });
+    }); */
 }
 
 function displayFiveDayForecast(data) {
@@ -142,14 +144,21 @@ function displayFiveDayForecast(data) {
 
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
-    var pEl = $('<p>').text(`Temperature: ${forecast.main.temp} °F`);
-    forecastContainer.append(pEl);
-    var pElTemp = $('<p>').text(`Feels Like: ${forecast.main.feels_like} °F`);
-    forecastContainer.append(pElTemp);
-    var pElHumid = $('<p>').text(`Humidity: ${forecast.main.humidity} %`);
-    forecastContainer.append(pElHumid);
-    var pElWind = $('<p>').text(`Wind Speed: ${forecast.wind.speed} MPH`);
-    forecastContainer.append(pElWind);
+    var pEl = document.createElement("p");
+    pEl.textContent = `Temperature: ${forecast.main.temp} °F`;
+    forecastContainer.appendChild(pEl);
+
+    var pElTemp = document.createElement("p");
+    pElTemp.textContent = `Feels Like: ${forecast.main.feels_like} °F`;
+    forecastContainer.appendChild(pElTemp);
+
+    var pElHumid = document.createElement("p");
+    pElHumid.textContent = `Humidity: ${forecast.main.humidity} %`;
+    forecastContainer.appendChild(pElHumid);
+
+    var pElWind = document.createElement("p");
+    pElWind.textContent = `Wind Speed: ${forecast.wind.speed} MPH`;
+    forecastContainer.appendChild(pElWind);
   });
 
   var forecastWrapper = document.getElementById("forecast-wrapper");
