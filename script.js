@@ -4,7 +4,7 @@
 var APIKey = "d1cb29ff12063ca4c92fd18316bf0c50";
 var searchHistory = [];
 var city = "";
-var citySearch = "";
+/* var citySearch = ""; */
 
 //get date
 const currentDate = new Date();
@@ -77,7 +77,9 @@ function displayHistory() {
     histButton.appendChild(button)
   })
 
-  
+  var container = document.createElement('div');
+  container.appendChild(histButton);
+
 };
 
 
