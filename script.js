@@ -139,12 +139,12 @@ function getFiveDayForecast() {
 function displayFiveDayForecast(data) {
 
   console.log(data);
-/* 
-  var forecasts = data.list;
 
-  var fiveDay = forecasts.slice(1, 5) */
+  var fiveDay = data;
 
-  var forecasts = data.list.slice(1, 6);
+  var forecasts = fiveDay.slice(1, 5);
+
+ /*  var forecasts = data.list.slice(1, 6); */
   
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
