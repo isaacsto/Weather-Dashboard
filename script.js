@@ -51,8 +51,7 @@ function clearHistory() {
   var forecastWrapper = document.getElementById("forecast-wrapper");
   forecastWrapper.innerHTML = "";
 
-  var lastSearchedCity = searchHistory[searchHistory.length - 1];
-  searchHistory = [lastSearchedCity];
+ 
   localStorage.setItem('city', JSON.stringify(searchHistory));
 
   displayHistory(); 
@@ -60,12 +59,10 @@ function clearHistory() {
 
 function displayHistory() {
   
-  var histButton = document.createElement('div');
+  var histButton = document.getElementById('historyButtonCont');
   histButton.innerHTML = "";
 
-  var storedSearchHistory = JSON.parse(localStorage.getItem('city')) || [];
-  searchHistory = storedSearchHistory;
-
+  searchHistory = JSON.parse(localStorage.getItem('city')) || [];
 
   searchHistory.forEach(function (city) {
     var button = document.createElement("button");
@@ -77,8 +74,7 @@ function displayHistory() {
     histButton.appendChild(button)
   })
 
-  var container = document.createElement('div');
-  container.appendChild(histButton);
+
 
 };
 
@@ -182,12 +178,5 @@ var forecasts = data.list.slice(1, 6);
 
 
 
-/* function onLoad() {
 
-
-	displayHistory();
-
-};
-
-onLoad(); */
 

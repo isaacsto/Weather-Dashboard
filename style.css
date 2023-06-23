@@ -4,13 +4,22 @@
     margin-bottom: 10px;
 }
 
+h1 {
+    padding: 10px; 
+}
+
 img {
     width:  70px;
     height: 70px;
 } 
 
+.todayBody {
+    margin-left: 10px; 
+}
+
 .weatherContainer {
     width: 500px; 
+    padding: 10px;
   }
   
   .weatherDetail {
