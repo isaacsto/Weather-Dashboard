@@ -125,25 +125,31 @@ function getTodayWeather(){
  */
 
 function getFiveDayForecast() {
-  var fiveDayWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(city) + "&units=imperial&appid=" + APIKey;
+  var fiveDayWeatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + encodeURIComponent(city) + "&units=imperial&appid=" + APIKey;
 
   fetch(fiveDayWeatherUrl)
     .then(function(response) {
       return response.json();
     })
-  /*   .then(function(data) {
+ .then(function(data) {
       displayFiveDayForecast(data);
-    }); */
+    });  
 }
 
 function displayFiveDayForecast(data) {
-  
-  $('.icons').attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
 
   var forecasts = data.list.slice(1, 6);
 
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
+
+    var iconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
+
+
+    var fiveDayImg = document.createElement("img");
+    fiveDayImg.src = iconUrl;
+    forecastContainer.appendChild(fiveDayImg)
+
     var pEl = document.createElement("p");
     pEl.textContent = `Temperature: ${forecast.main.temp} °F`;
     forecastContainer.appendChild(pEl);
@@ -161,8 +167,8 @@ function displayFiveDayForecast(data) {
     forecastContainer.appendChild(pElWind);
   });
 
-  var forecastWrapper = document.getElementById("forecast-wrapper");
-  forecastWrapper.appendChild(forecastContainer);
+ var forecastWrapper = document.getElementById("forecast-wrapper");
+  forecastWrapper.appendChild(forecastContainer); 
 }
 
 
