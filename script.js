@@ -64,7 +64,7 @@ function displayHistory() {
   var histButton = document.getElementById('historyButton');
   histButton.innerHTML = "";
 
-  searchHistory.slice(0, -1).forEach(function (city) {
+  searchHistory.forEach(function (city) {
     var button = document.createElement("button");
     button.textContent = city;
     button.addEventListener("click", function () {
