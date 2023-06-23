@@ -12,11 +12,14 @@ const dateString = currentDate.toDateString();
 console.log(dateString);
 
 
-//makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
+
+
+ //makes searchBtn clickable, puts value of user input into variable, alerts if invalid value is input 
+
 document.getElementById("searchBtn").addEventListener("click", function (event) {
     event.preventDefault();
 
-   /*  city = document.getElementById("cityInput").value; */
+    city = document.getElementById("cityInput").value; 
     var searchInput = document.getElementById('cityInput');
     var searchValue = searchInput.value;
 
@@ -37,8 +40,10 @@ document.getElementById("searchBtn").addEventListener("click", function (event) 
     displayHistory();
     getTodayWeather();
     getFiveDayForecast();
-    displayFiveDayForecast();
+  
 });
+
+
 
 function displayHistory() {
   
@@ -140,11 +145,11 @@ function displayFiveDayForecast(data) {
 
   console.log(data);
 
-  var fiveDay = data;
+/*   var fiveDay = data;
 
-  var forecasts = fiveDay.slice(1, 5);
+  var forecasts = fiveDay.slice(1, 5); */
 
- /*  var forecasts = data.list.slice(1, 6); */
+var forecasts = data.list.slice(1, 6); 
   
   var forecastContainer = document.createElement("div");
   forecasts.forEach(function(forecast) {
@@ -178,7 +183,7 @@ function displayFiveDayForecast(data) {
   });
 
  var forecastWrapper = document.getElementById("forecast-wrapper");
-  forecastWrapper.appendChild(forecastContainer); 
+  forecastWrapper.append(forecastContainer);  
 }
 
 
